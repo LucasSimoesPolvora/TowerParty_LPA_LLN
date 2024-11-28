@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf3xfyya0p0mu"]
+
+[ext_resource type="PackedScene" uid="uid://ka14v5pcvb0e" path="res://scenes/game_elements/pieces/basics/L/block_piece_L.tscn" id="1_08e6p"]
+[ext_resource type="Script" path="res://scenes/game_elements/pieces/pieces.gd" id="1_bmnjy"]
+
+[node name="piece_L" type="Node2D"]
+script = ExtResource("1_bmnjy")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+
+[node name="block_piece_L" parent="RigidBody2D" instance=ExtResource("1_08e6p")]
+position = Vector2(0, -50)
+
+[node name="block_piece_L2" parent="RigidBody2D" instance=ExtResource("1_08e6p")]
+position = Vector2(-50, -50)
+
+[node name="block_piece_L3" parent="RigidBody2D" instance=ExtResource("1_08e6p")]
+position = Vector2(-50, -1)
+
+[node name="block_piece_L4" parent="RigidBody2D" instance=ExtResource("1_08e6p")]
+position = Vector2(50, -50)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+position = Vector2(25, 0)
+polygon = PackedVector2Array(-75, 49, -75, -50, 75, -50, 75, 0, -25, 0, -25, 49)
+
+[node name="piece" type="Area2D" parent="RigidBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D/piece"]
+position = Vector2(25, 0)
+polygon = PackedVector2Array(-75, 49, -75, -50, 75, -50, 75, 0, -25, 0, -25, 49)
+
+[connection signal="area_entered" from="RigidBody2D/piece" to="." method="_on_piece_area_entered"]

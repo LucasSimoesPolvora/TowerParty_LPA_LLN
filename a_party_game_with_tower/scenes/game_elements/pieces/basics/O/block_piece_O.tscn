@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://cba1l7q1loadk"]
+
+[ext_resource type="Texture2D" uid="uid://dsd7ob764rxrj" path="res://Assets/Images/Blocks/Basics/basic_O.png" id="1_p68tn"]
+
+[node name="block_piece_O" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 50.0
+offset_bottom = 50.0
+texture = ExtResource("1_p68tn")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BotomRight" type="Node2D" parent="."]
+position = Vector2(50, 50)
+scale = Vector2(0.2, 0.2)
+
+[node name="BotomLeft" type="Node2D" parent="."]
+position = Vector2(0, 50)
+scale = Vector2(0.2, 0.2)
+
+[node name="TopRight" type="Node2D" parent="."]
+position = Vector2(50, 0)
+scale = Vector2(0.2, 0.2)
+
+[node name="TopLeft" type="Node2D" parent="."]
+scale = Vector2(0.2, 0.2)

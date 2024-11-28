@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://ka14v5pcvb0e"]
+
+[ext_resource type="Texture2D" uid="uid://hn7kysen6d53" path="res://Assets/Images/Blocks/Basics/basic_L.png" id="1_axkd0"]
+
+[node name="block_piece_L" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 50.0
+offset_bottom = 50.0
+texture = ExtResource("1_axkd0")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BotomRight" type="Node2D" parent="."]
+position = Vector2(50, 50)
+scale = Vector2(0.2, 0.2)
+
+[node name="BotomLeft" type="Node2D" parent="."]
+position = Vector2(0, 50)
+scale = Vector2(0.2, 0.2)
+
+[node name="TopRight" type="Node2D" parent="."]
+position = Vector2(50, 0)
+scale = Vector2(0.2, 0.2)
+
+[node name="TopLeft" type="Node2D" parent="."]
+scale = Vector2(0.2, 0.2)

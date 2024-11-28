@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=3 uid="uid://cejt44jlc47d"]
+
+[ext_resource type="PackedScene" uid="uid://k5no8rbevxm5" path="res://scenes/game_elements/platforms/4.tscn" id="1_e2v8h"]
+[ext_resource type="Script" path="res://scenes/level/main_game.gd" id="1_pba15"]
+[ext_resource type="Texture2D" uid="uid://bxk4vf7scuu42" path="res://Assets/Images/Others/finishLine.png" id="3_i1v6j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wu1am"]
+size = Vector2(284.878, 33.4471)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4lmhx"]
+size = Vector2(4558, 200)
+
+[node name="MainGame" type="Node2D"]
+position = Vector2(36, -111)
+script = ExtResource("1_pba15")
+
+[node name="4" parent="." instance=ExtResource("1_e2v8h")]
+position = Vector2(188, 707)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(541, 500)
+rotation = 3.14159
+scale = Vector2(97.6653, 61.0896)
+zoom = Vector2(0.7, 0.7)
+
+[node name="checkPoint1" type="Sprite2D" parent="."]
+position = Vector2(543.5, 320)
+scale = Vector2(4.1, 0.956735)
+texture = ExtResource("3_i1v6j")
+
+[node name="checkpoint1" type="Area2D" parent="checkPoint1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checkPoint1/checkpoint1"]
+position = Vector2(-1.82924, 0.0273438)
+shape = SubResource("RectangleShape2D_wu1am")
+
+[node name="checkPoint2" type="Sprite2D" parent="."]
+position = Vector2(543.5, -180)
+scale = Vector2(4.1, 0.956735)
+texture = ExtResource("3_i1v6j")
+
+[node name="checkpoint2" type="Area2D" parent="checkPoint2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checkPoint2/checkpoint2"]
+position = Vector2(-1.82924, 0.0273438)
+shape = SubResource("RectangleShape2D_wu1am")
+
+[node name="checkPoint3" type="Sprite2D" parent="."]
+position = Vector2(543.5, -700)
+scale = Vector2(4.1, 3.88957)
+texture = ExtResource("3_i1v6j")
+
+[node name="checkpointFinal" type="Area2D" parent="checkPoint3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checkPoint3/checkpointFinal"]
+position = Vector2(-1.82924, 0.0273438)
+shape = SubResource("RectangleShape2D_wu1am")
+
+[node name="destroy" type="Area2D" parent="."]
+position = Vector2(-1800, 984)
+
+[node name="destroy" type="CollisionShape2D" parent="destroy"]
+position = Vector2(2269, 90)
+shape = SubResource("RectangleShape2D_4lmhx")
+
+[node name="checkpoint1Timer" type="Timer" parent="."]
+
+[node name="checkpointFinalTimer" type="Timer" parent="."]
+
+[node name="checkpoint2Timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="checkPoint1/checkpoint1" to="." method="_on_checkpoint_1_area_entered"]
+[connection signal="area_exited" from="checkPoint1/checkpoint1" to="." method="_on_checkpoint_1_area_exited"]
+[connection signal="area_entered" from="checkPoint2/checkpoint2" to="." method="_on_checkpoint_2_area_entered"]
+[connection signal="area_exited" from="checkPoint2/checkpoint2" to="." method="_on_checkpoint_2_area_exited"]
+[connection signal="area_entered" from="checkPoint3/checkpointFinal" to="." method="_on_checkpoint_final_area_entered"]
+[connection signal="area_exited" from="checkPoint3/checkpointFinal" to="." method="_on_checkpoint_final_area_exited"]
+[connection signal="timeout" from="checkpoint1Timer" to="." method="_on_checkpoint_1_timer_timeout"]
+[connection signal="timeout" from="checkpointFinalTimer" to="." method="_on_checkpoint_final_timer_timeout"]
+[connection signal="timeout" from="checkpoint2Timer" to="." method="_on_checkpoint_2_timer_timeout"]
