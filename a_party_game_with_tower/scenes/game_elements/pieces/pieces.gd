@@ -23,8 +23,13 @@ func _process(_delta):
 func manageUserInput():
 	if not get_meta("isFalling"):
 		return
-	if Input.is_action_just_pressed("rotate"):
+	if Input.is_action_just_pressed("rotate") or Input.is_action_just_pressed("rotate_right"):
 		piece_body.rotation = lerp_angle(piece_body.rotation, piece_body.rotation+(PI/2), 1)
+		pos += 1
+		if pos > 4:
+			pos = 1
+	if Input.is_action_just_pressed("rotate_left"):
+		piece_body.rotation = lerp_angle(piece_body.rotation, piece_body.rotation-(PI/2), 1)
 		pos += 1
 		if pos > 4:
 			pos = 1
