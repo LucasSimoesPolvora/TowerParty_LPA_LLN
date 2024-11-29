@@ -30,4 +30,30 @@ polygon = PackedVector2Array(-75, 0, -75, 50, 75, 50, 75, 0, 25, 0, 25, -50, -25
 position = Vector2(-25, 0)
 polygon = PackedVector2Array(-75, 0, -75, 50, 75, 50, 75, 0, 25, 0, 25, -50, -25, -50, -25, 0)
 
+[node name="coners_list" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="coners_list"]
+position = Vector2(-75, 50)
+
+[node name="Node2D2" type="Node2D" parent="coners_list"]
+position = Vector2(-75, 0)
+
+[node name="Node2D3" type="Node2D" parent="coners_list"]
+position = Vector2(-25, 0)
+
+[node name="Node2D4" type="Node2D" parent="coners_list"]
+position = Vector2(-25, -50)
+
+[node name="Node2D5" type="Node2D" parent="coners_list"]
+position = Vector2(25, -50)
+
+[node name="Node2D6" type="Node2D" parent="coners_list"]
+position = Vector2(25, 0)
+
+[node name="Node2D7" type="Node2D" parent="coners_list"]
+position = Vector2(75, 0)
+
+[node name="Node2D8" type="Node2D" parent="coners_list"]
+position = Vector2(75, 50)
+
 [connection signal="area_entered" from="RigidBody2D/piece" to="." method="_on_piece_area_entered"]

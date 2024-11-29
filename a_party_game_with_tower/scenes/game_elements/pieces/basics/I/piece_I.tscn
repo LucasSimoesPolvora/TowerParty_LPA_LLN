@@ -34,4 +34,18 @@ position = Vector2(50, 0)
 position = Vector2(-25, 0)
 shape = SubResource("RectangleShape2D_fs1nv")
 
+[node name="coners_list" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="coners_list"]
+position = Vector2(-25, -100)
+
+[node name="Node2D2" type="Node2D" parent="coners_list"]
+position = Vector2(25, -100)
+
+[node name="Node2D3" type="Node2D" parent="coners_list"]
+position = Vector2(25, 100)
+
+[node name="Node2D4" type="Node2D" parent="coners_list"]
+position = Vector2(-25, 100)
+
 [connection signal="area_entered" from="RigidBody2D/piece" to="." method="_on_piece_area_entered"]
