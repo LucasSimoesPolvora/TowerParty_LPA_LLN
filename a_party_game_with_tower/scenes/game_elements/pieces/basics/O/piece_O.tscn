@@ -1,33 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0qf3xhjip5no"]
+[gd_scene load_steps=3 format=3 uid="uid://d0qf3xhjip5no"]
 
 [ext_resource type="PackedScene" uid="uid://cba1l7q1loadk" path="res://scenes/game_elements/pieces/basics/O/block_piece_O.tscn" id="1_33jux"]
-[ext_resource type="Script" path="res://scenes/game_elements/pieces/pieces.gd" id="1_yuj2s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c8l5w"]
 size = Vector2(100, 100)
 
-[node name="piece_O" type="Node2D"]
-script = ExtResource("1_yuj2s")
+[node name="RigidBody2D" type="RigidBody2D"]
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="block_piece_O" parent="." instance=ExtResource("1_33jux")]
 
-[node name="block_piece_O" parent="RigidBody2D" instance=ExtResource("1_33jux")]
-
-[node name="block_piece_O2" parent="RigidBody2D" instance=ExtResource("1_33jux")]
+[node name="block_piece_O2" parent="." instance=ExtResource("1_33jux")]
 position = Vector2(-50, -50)
 
-[node name="block_piece_O3" parent="RigidBody2D" instance=ExtResource("1_33jux")]
+[node name="block_piece_O3" parent="." instance=ExtResource("1_33jux")]
 position = Vector2(0, -50)
 
-[node name="block_piece_O4" parent="RigidBody2D" instance=ExtResource("1_33jux")]
+[node name="block_piece_O4" parent="." instance=ExtResource("1_33jux")]
 position = Vector2(-50, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_c8l5w")
 
-[node name="piece" type="Area2D" parent="RigidBody2D"]
+[node name="piece" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/piece"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="piece"]
 shape = SubResource("RectangleShape2D_c8l5w")
 
 [node name="coners_list" type="Node2D" parent="."]
@@ -43,5 +39,3 @@ position = Vector2(50, 50)
 
 [node name="Node2D4" type="Node2D" parent="coners_list"]
 position = Vector2(-50, 50)
-
-[connection signal="area_entered" from="RigidBody2D/piece" to="." method="_on_piece_area_entered"]

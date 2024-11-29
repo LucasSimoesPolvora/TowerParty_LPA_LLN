@@ -24,32 +24,32 @@ func manageUserInput():
 	if not get_meta("isFalling"):
 		return
 	if Input.is_action_just_pressed("rotate") or Input.is_action_just_pressed("rotate_right"):
-		piece_body.rotation = lerp_angle(piece_body.rotation, piece_body.rotation+(PI/2), 1)
+		rotation = lerp_angle(rotation, rotation+(PI/2), 1)
 		pos += 1
 		if pos > 4:
 			pos = 1
 	if Input.is_action_just_pressed("rotate_left"):
-		piece_body.rotation = lerp_angle(piece_body.rotation, piece_body.rotation-(PI/2), 1)
+		rotation = lerp_angle(rotation, rotation-(PI/2), 1)
 		pos += 1
 		if pos > 4:
 			pos = 1
 	if Input.is_action_just_pressed("right"):
-		piece_body.move_and_collide(Vector2(PIECEMOVEMENT, 0))
+		move_and_collide(Vector2(PIECEMOVEMENT, 0))
 	if Input.is_action_just_pressed("left"):
-		piece_body.move_and_collide(Vector2(-PIECEMOVEMENT, 0))
+		move_and_collide(Vector2(-PIECEMOVEMENT, 0))
 	if Input.is_action_pressed("down"):
-		piece_body.linear_velocity.y = 1000
+		linear_velocity.y = 1000
 	else:
-		piece_body.linear_velocity.y = 100
+		linear_velocity.y = 100
 
 func getPosition():
 	if get_meta("isFalling"):
 		return
 	var width = (pos2+pos4)/2.0
 	var length = (pos1+pos3)/2.0
-	var angle = piece_body.rotation
+	var angle = rotation
 	var height_max = abs(width * sin(angle)) + abs(length * cos(angle))
-	Global.pieces_pos_y.append(piece_body.position.y-(height_max*50))
+	Global.pieces_pos_y.append(position.y-(height_max*50))
 
 func _on_piece_area_entered(area):
 	match area.name:

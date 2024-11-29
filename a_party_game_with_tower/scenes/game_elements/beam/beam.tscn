@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c43qekwccpoyd"]
+[gd_scene load_steps=3 format=3 uid="uid://d3q3o25dcrisy"]
 
-[ext_resource type="Texture2D" uid="uid://6fg2ierkgj4b" path="res://scenes/objects/beam/beam_border.png" id="1_mpnu4"]
+[ext_resource type="Texture2D" uid="uid://6fg2ierkgj4b" path="res://scenes/game_elements/beam/beam_border.png" id="1_mpnu4"]
+[ext_resource type="Script" path="res://scenes/game_elements/beam/beam.gd" id="2_d0eep"]
 
 [node name="Beam" type="Sprite2D"]
 texture = ExtResource("1_mpnu4")
+script = ExtResource("2_d0eep")

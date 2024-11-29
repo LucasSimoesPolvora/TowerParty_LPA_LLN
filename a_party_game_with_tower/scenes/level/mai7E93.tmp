@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cejt44jlc47d"]
+[gd_scene load_steps=6 format=3 uid="uid://cejt44jlc47d"]
 
 [ext_resource type="PackedScene" uid="uid://k5no8rbevxm5" path="res://scenes/game_elements/platforms/4.tscn" id="1_e2v8h"]
 [ext_resource type="Script" path="res://scenes/level/main_game.gd" id="1_pba15"]
 [ext_resource type="Texture2D" uid="uid://bxk4vf7scuu42" path="res://Assets/Images/Others/finishLine.png" id="3_i1v6j"]
-[ext_resource type="PackedScene" uid="uid://d3q3o25dcrisy" path="res://scenes/game_elements/beam/beam.tscn" id="4_mxqlo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu1am"]
 size = Vector2(284.878, 33.4471)
@@ -69,15 +68,6 @@ shape = SubResource("RectangleShape2D_4lmhx")
 [node name="checkpointFinalTimer" type="Timer" parent="."]
 
 [node name="checkpoint2Timer" type="Timer" parent="."]
-
-[node name="Beam" parent="." instance=ExtResource("4_mxqlo")]
-position = Vector2(896, 498)
-
-[node name="pieces" type="Node2D" parent="."]
-
-[node name="isFalling" type="Node2D" parent="pieces"]
-
-[node name="hasFallen" type="Node2D" parent="pieces"]
 
 [connection signal="area_entered" from="checkPoint1/checkpoint1" to="." method="_on_checkpoint_1_area_entered"]
 [connection signal="area_exited" from="checkPoint1/checkpoint1" to="." method="_on_checkpoint_1_area_exited"]

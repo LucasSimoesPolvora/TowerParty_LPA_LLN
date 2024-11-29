@@ -1,51 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5j3wj4cdfawp"]
+[gd_scene load_steps=3 format=3 uid="uid://c5j3wj4cdfawp"]
 
-[ext_resource type="Script" path="res://scenes/game_elements/pieces/pieces.gd" id="1_432fg"]
 [ext_resource type="PackedScene" uid="uid://ds0e4pxkmnea" path="res://scenes/game_elements/pieces/basics/I/block_piece_I.tscn" id="1_ocpf4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fs1nv"]
 size = Vector2(50, 200)
 
-[node name="piece_I" type="Node2D"]
-script = ExtResource("1_432fg")
+[node name="RigidBody2D" type="RigidBody2D"]
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="block_piece_I" parent="." instance=ExtResource("1_ocpf4")]
 position = Vector2(-25, 0)
 
-[node name="block_piece_I" parent="RigidBody2D" instance=ExtResource("1_ocpf4")]
+[node name="block_piece_I2" parent="." instance=ExtResource("1_ocpf4")]
+position = Vector2(-25, 50)
 
-[node name="block_piece_I2" parent="RigidBody2D" instance=ExtResource("1_ocpf4")]
-position = Vector2(0, 50)
+[node name="block_piece_I3" parent="." instance=ExtResource("1_ocpf4")]
+position = Vector2(-25, -50)
 
-[node name="block_piece_I3" parent="RigidBody2D" instance=ExtResource("1_ocpf4")]
-position = Vector2(0, -50)
+[node name="block_piece_I4" parent="." instance=ExtResource("1_ocpf4")]
+position = Vector2(-25, -100)
 
-[node name="block_piece_I4" parent="RigidBody2D" instance=ExtResource("1_ocpf4")]
-position = Vector2(0, -100)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-position = Vector2(25, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_fs1nv")
 
-[node name="piece" type="Area2D" parent="RigidBody2D"]
-position = Vector2(50, 0)
+[node name="piece" type="Area2D" parent="."]
+position = Vector2(25, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/piece"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="piece"]
 position = Vector2(-25, 0)
 shape = SubResource("RectangleShape2D_fs1nv")
 
 [node name="coners_list" type="Node2D" parent="."]
+position = Vector2(-25, 0)
 
 [node name="Node2D" type="Node2D" parent="coners_list"]
-position = Vector2(-25, -100)
+position = Vector2(0, -100)
 
 [node name="Node2D2" type="Node2D" parent="coners_list"]
-position = Vector2(25, -100)
+position = Vector2(50, -100)
 
 [node name="Node2D3" type="Node2D" parent="coners_list"]
-position = Vector2(25, 100)
+position = Vector2(50, 100)
 
 [node name="Node2D4" type="Node2D" parent="coners_list"]
-position = Vector2(-25, 100)
-
-[connection signal="area_entered" from="RigidBody2D/piece" to="." method="_on_piece_area_entered"]
+position = Vector2(0, 100)

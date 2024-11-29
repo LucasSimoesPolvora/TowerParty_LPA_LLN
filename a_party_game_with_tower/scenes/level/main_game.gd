@@ -12,14 +12,19 @@ var timersCheckpoint1 = []
 var timersCheckpoint2 = []
 var timersCheckpointFinal = []
 
+@onready var beam = $Beam
+@onready var fallingPiece = $pieces/isFalling
+
+
 func _ready():
 	camera = $Camera2D
-	
 	camera.position.y = Global.cameraPositionY
 
 func _process(delta: float) -> void:
 	inst()
 	changeCamera(delta)
+	beam.updateBeam(fallingPiece,beam)
+	
 	print("Checkpoint 1 :")
 	print(timersCheckpoint1)
 	
@@ -39,14 +44,10 @@ func inst():
 		var piece_data = Global.pieces[random_index]  # Récupère les données de la pièce
 		var instance = piece_data["scene"].instantiate()  # Instancie la scène de la pièce
 		
-		instance.pos1 = piece_data["pos1"]
-		instance.pos2 = piece_data["pos2"]
-		instance.pos3 = piece_data["pos3"]
-		instance.pos4 = piece_data["pos4"]
 		instance.position = Vector2(540, pieceSpawnPosY)
 		instance.set_meta("isFalling", true)
 		
-		add_child(instance)
+		fallingPiece.add_child(instance)
 		Global.spawnBloc = false
 
 func _on_checkpoint_1_area_entered(area: Area2D) -> void:
