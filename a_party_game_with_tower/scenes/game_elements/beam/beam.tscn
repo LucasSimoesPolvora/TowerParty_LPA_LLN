@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c43qekwccpoyd"]
+
+[ext_resource type="Texture2D" uid="uid://6fg2ierkgj4b" path="res://scenes/objects/beam/beam_border.png" id="1_mpnu4"]
+
+[node name="Beam" type="Sprite2D"]
+texture = ExtResource("1_mpnu4")
