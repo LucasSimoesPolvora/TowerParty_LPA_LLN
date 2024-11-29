@@ -10,6 +10,7 @@ size = Vector2(50, 200)
 script = ExtResource("1_432fg")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(-25, 0)
 
 [node name="block_piece_I" parent="RigidBody2D" instance=ExtResource("1_ocpf4")]
 
