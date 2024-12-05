@@ -3,8 +3,7 @@ extends RigidBody2D
 # preload sounds from library
 var sounds = preload("res://library/sound.gd").new()
 
-const FALLING_SPEED = 100
-const FAST_FALLING_SPEED = 1000
+var FAST_FALLING_SPEED = Global.pieceSpeed * 10
 const PIECE_MOVEMENT = 25
 const ROTATION_ANGLE = PI/2
 
@@ -70,7 +69,6 @@ func move_piece(direction: int) -> void:
 	sounds.moveSound()
 
 func is_piece_falling():
-	print(get_meta("isFalling"))
 	return get_meta("isFalling")
 
 func rotate_piece(direction) -> void:
@@ -81,7 +79,7 @@ func update_falling_speed() -> void:
 	if Input.is_action_pressed(INPUT_DOWN):
 		linear_velocity.y = FAST_FALLING_SPEED
 	else:
-		linear_velocity.y = FALLING_SPEED
+		linear_velocity.y = Global.pieceSpeed
 
 func _on_piece_area_entered(area) -> void:
 	match area.name:
