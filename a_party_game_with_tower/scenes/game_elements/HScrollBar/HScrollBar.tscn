@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://06y5oxvldkpr"]
+
+[ext_resource type="Script" path="res://scenes/game_elements/HScrollBar/h_scroll_bar.gd" id="1_cw8hy"]
+
+[node name="HScrollBar" type="HScrollBar"]
+offset_right = 300.0
+offset_bottom = 10.0
+min_value = 25.0
+max_value = 300.0
+value = 100.0
+script = ExtResource("1_cw8hy")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_top = 22.0
+offset_right = 40.0
+offset_bottom = 45.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.196078)
