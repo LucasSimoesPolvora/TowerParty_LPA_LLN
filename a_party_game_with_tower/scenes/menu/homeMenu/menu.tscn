@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://bhy06cx544rl6"]
 
-[ext_resource type="Script" path="res://scenes/menu/mainMenu.gd" id="1_rjgj7"]
+[ext_resource type="Script" path="res://scenes/menu/homeMenu/mainMenu.gd" id="1_rjgj7"]
 [ext_resource type="Texture2D" uid="uid://dj1a267qccpxa" path="res://Assets/Images/Others/background.jpg" id="2_364eq"]
 [ext_resource type="FontFile" uid="uid://ciu34ps6m37b6" path="res://Assets/Fonts/upheavtt.ttf" id="3_8ncgk"]
 [ext_resource type="Texture2D" uid="uid://ry5pgmaujf8q" path="res://Assets/Images/Buttons/GUI.png" id="4_4mf5c"]
@@ -144,4 +144,5 @@ text = "Tower Game"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="playingButton" to="." method="_on_playing_button_pressed"]
+[connection signal="pressed" from="settingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="fullscreenButton" to="." method="_on_fullscreen_button_pressed"]
