@@ -15,6 +15,7 @@ var piece_spawn_position_y = SPAWNCHECKPOINT0
 var nextPieceNumber = generateRandomNumber()
 var buttons = []
 
+@onready var StopWatch = $CanvasLayer/StopwatchLabel
 @onready var camera = $Camera2D
 @onready var beam = $Beam
 @onready var isFalling = $pieces/isFalling
@@ -34,6 +35,7 @@ func _process(delta: float) -> void:
 	handle_user_input_screen_size()
 	updateCamera(delta)
 	beam.updateBeam(isFalling,beam)
+	update_StopwatchLabel()
 
 func handle_user_input_screen_size():
 	if Input.is_action_just_pressed("fullscreen"):
@@ -102,3 +104,7 @@ func getMax(hasFallen: Node2D) -> float:
 func _on_reset_button_pressed() -> void:
 	for child in hasFallen.get_children():
 		child.queue_free()
+	StopWatch.reset()
+
+func update_StopwatchLabel():
+	StopWatch.text = StopWatch.time_to_string()
