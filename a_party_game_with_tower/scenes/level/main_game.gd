@@ -20,6 +20,7 @@ var buttons = []
 @onready var beam = $Beam
 @onready var isFalling = $pieces/isFalling
 @onready var hasFallen = $pieces/hasFallen
+@export var fallen = hasFallen
 
 func _ready():
 	InitializeSound()
