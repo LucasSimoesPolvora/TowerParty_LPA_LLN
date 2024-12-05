@@ -4,44 +4,44 @@ var sounds = preload("res://library/sound.gd").new()
 
 var smoothing_speed := 1.0
 
+const DIFFDROPPER = 500
+const DIFFCAMERA = 0
+
 const SPAWNCHECKPOINT0 = 0
 const SPAWNCHECKPOINT1 = -450
 const SPAWNCHECKPOINT2 = -1000
 var piece_spawn_position_y = SPAWNCHECKPOINT0
 
-var camera
-var checkpoint1_timers = []
-var checkpoint2_timers = []
-var checkpoint3_timers = []
 var nextPieceNumber = generateRandomNumber()
+var buttons = []
 
+@onready var camera = $Camera2D
 @onready var beam = $Beam
 @onready var isFalling = $pieces/isFalling
+@onready var hasFallen = $pieces/hasFallen
 
 func _ready():
-	InitializeCamera()
 	InitializeSound()
+	var button_restart = $CanvasLayer/resetButton
+	buttons.append(button_restart)
+	Global.syncButtonsBottomRight(buttons)
 
 func InitializeSound():
 	add_child(sounds)
 
-func InitializeCamera():
-	camera = $Camera2D
-	camera.position.y = Global.cameraPositionY
-
 func _process(delta: float) -> void:
 	inst()
 	handle_user_input_screen_size()
-	changeCamera(delta)
+	updateCamera(delta)
 	beam.updateBeam(isFalling,beam)
 
 func handle_user_input_screen_size():
 	if Input.is_action_just_pressed("fullscreen"):
 		Global.change_screen_mode()
+		Global.syncButtonsBottomRight(buttons)
 
-func changeCamera(delta: float):
-	var target_y = float(Global.cameraPositionY)
-	camera.position.y = lerp(camera.position.y, target_y, smoothing_speed * delta)
+func updateCamera(delta):
+	camera.position.y = lerp(camera.position.y, getMax(hasFallen), smoothing_speed * delta)
 
 func generateRandomNumber():
 	return randi() % Global.pieces.size()  # Sélectionne une pièce aléatoirement
@@ -62,14 +62,15 @@ func inst():
 		var next_piece_data = Global.pieces[nextPieceNumber]
 		display_next_piece(next_piece_data)
 		
-		piece_instance.position = Vector2(540, piece_spawn_position_y)
+		var max_height = getMax(hasFallen)
+		piece_instance.position = Vector2(540, max_height-DIFFDROPPER)
 		piece_instance.set_meta("isFalling", true)
 		
 		is_falling_node.add_child(piece_instance)
 		Global.spawnBloc = false
 
 func display_next_piece(next_piece_data):
-	var next_piece_preview_node = $nextPiecePreview
+	var next_piece_preview_node = $CanvasLayer/nextPiecePreview
 	#clean old piece
 	for child in next_piece_preview_node.get_children():
 		next_piece_preview_node.remove_child(child)
@@ -82,102 +83,22 @@ func display_next_piece(next_piece_data):
 	
 	next_piece_preview_node.add_child(next_piece_instance)
 
-func appendTimer(timer, checkpointNumber):
-	match checkpointNumber:
-		1:
-			checkpoint1_timers.append(timer)
-		2:
-			checkpoint2_timers.append(timer)
-		3:
-			checkpoint3_timers.append(timer)
-
-func _on_checkpoint_timer_timeout(piece_spawn_position_y):
-	print("piece_spawn_position_y")
-	print(piece_spawn_position_y)
-	print("cameraPositionY")
-	print(Global.cameraPositionY)
-	Global.cameraPositionY = piece_spawn_position_y-150
-	print("cameraPositionY after")
-	print(Global.cameraPositionY)
-	piece_spawn_position_y = piece_spawn_position_y-475
-	print("piece_spawn_position_y")
-	print(piece_spawn_position_y)
-
-func getPieceSpawnPosition(checkpointNumber: int):
-	match checkpointNumber:
-		1:
-			return SPAWNCHECKPOINT0
-		2:
-			return SPAWNCHECKPOINT1
-		3:
-			return SPAWNCHECKPOINT2
-
-func getCheckpointNumber(area: Area2D) -> int:
-	var area_position = area.get_parent().position.y
-	if area_position > SPAWNCHECKPOINT0:
-		return 1
-	elif area_position > SPAWNCHECKPOINT1:
-		return 2
-	else:
-		return 3
-
 func _on_checkpoint_area_entered(area: Area2D) -> void:
 	if not area.name == "piece":
 		return
 	
-	var checkpointNumber = getCheckpointNumber(area)
-	var potential_piece_spawn_position_y = getPieceSpawnPosition(checkpointNumber)
-	if potential_piece_spawn_position_y<piece_spawn_position_y:
-		piece_spawn_position_y = potential_piece_spawn_position_y
-	
-	var timer = Timer.new()
-	timer.wait_time = 3
-	timer.one_shot = true
-	timer.set_meta("name", area.get_parent().get_parent().name)
-	timer.timeout.connect(Callable(self, "_on_checkpoint_timer_timeout").bind(timer, piece_spawn_position_y))
-	appendTimer(timer, checkpointNumber)
-	add_child(timer)
-	timer.start()
 
-func _on_checkpoint_area_exited(area: Area2D):
-	if not area.name == "piece":
-		return
-	
-	var checkpointNumber = getCheckpointNumber(area)
-	removeTimer(checkpointNumber, area)
-
-func removeTimer(checkpointNumber, area):
-	match checkpointNumber:
-		1:
-			for timer in checkpoint1_timers:
-				if timer.get_meta("name") == area.get_parent().get_parent().name:
-					timer.stop()
-					checkpoint1_timers.erase(timer)
-			
-					if not checkpoint1_timers.size()>0 && not area.get_parent().get_meta("isFalling"):
-						Global.cameraPositionY = get_parent().position.y+60
-						timer.queue_free()
-		2:
-			for timer in checkpoint2_timers:
-				if timer.get_meta("name") == area.get_parent().get_parent().name:
-					timer.stop()
-					checkpoint2_timers.erase(timer)
-			
-					if not checkpoint2_timers.size()>0 && not area.get_parent().get_meta("isFalling"):
-						Global.cameraPositionY = get_parent().position.y+60
-						timer.queue_free()
-		3:
-			for timer in checkpoint3_timers:
-				if timer.get_meta("name") == area.get_parent().get_parent().name:
-					timer.stop()
-					checkpoint3_timers.erase(timer)
-			
-					if not checkpoint3_timers.size()>0 && not area.get_parent().get_meta("isFalling"):
-						Global.cameraPositionY = get_parent().position.y+60
-						timer.queue_free()
-
+func getMax(hasFallen: Node2D) -> float:
+	var max = 600
+	for piece in hasFallen.get_children():
+		var corner_list = piece.get_node("border")
+		for corner in corner_list.get_children():
+			var rotated_position = piece.to_global(corner.position)
+			if (rotated_position.y < max):
+				max = rotated_position.y
+	print(max)
+	return max
 
 func _on_reset_button_pressed() -> void:
-	var hasFallen = $pieces/hasFallen
 	for child in hasFallen.get_children():
 		child.queue_free()
