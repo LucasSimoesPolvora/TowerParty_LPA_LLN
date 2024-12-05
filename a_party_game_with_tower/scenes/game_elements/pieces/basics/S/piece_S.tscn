@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://jr6c5ngnqaio"]
+[gd_scene load_steps=3 format=3 uid="uid://jr6c5ngnqaio"]
 
 [ext_resource type="PackedScene" uid="uid://meeuyytjc6qe" path="res://scenes/game_elements/pieces/basics/S/block_piece_S.tscn" id="1_i65b8"]
+[ext_resource type="Script" path="res://scenes/game_elements/pieces/pieces.gd" id="1_t127p"]
 
 [node name="RigidBody2D" type="RigidBody2D"]
+script = ExtResource("1_t127p")
 
 [node name="block_piece_S" parent="." instance=ExtResource("1_i65b8")]
 position = Vector2(25, -50)
@@ -17,37 +19,39 @@ position = Vector2(-25, -50)
 position = Vector2(-25, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-25, 0, -75, 0, -75, 50, 25, 50, 25, 0, 75, 0, 75, -50, -25, -50)
+polygon = PackedVector2Array(-24.875, 0.125, -74.875, 0.125, -74.875, 49.875, 24.875, 49.875, 24.875, -0.125, 74.875, -0.125, 74.875, -49.875, -24.875, -49.875)
 
 [node name="piece" type="Area2D" parent="."]
 position = Vector2(25, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="piece"]
 position = Vector2(-25, 0)
-polygon = PackedVector2Array(-25, 0, -75, 0, -75, 50, 25, 50, 25, 0, 75, 0, 75, -50, -25, -50)
+polygon = PackedVector2Array(-24.875, 0.125, -74.875, 0.125, -74.875, 49.875, 24.875, 49.875, 24.875, -0.125, 74.875, -0.125, 74.875, -49.875, -24.875, -49.875)
 
-[node name="coners_list" type="Node2D" parent="."]
+[node name="border" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="border"]
+position = Vector2(75, -50)
+
+[node name="Node2D2" type="Node2D" parent="border"]
+position = Vector2(75, 0)
+
+[node name="Node2D3" type="Node2D" parent="border"]
 position = Vector2(25, 0)
 
-[node name="Node2D" type="Node2D" parent="coners_list"]
+[node name="Node2D4" type="Node2D" parent="border"]
+position = Vector2(25, 50)
 
-[node name="Node2D2" type="Node2D" parent="coners_list"]
-position = Vector2(0, 50)
+[node name="Node2D5" type="Node2D" parent="border"]
+position = Vector2(-75, 50)
 
-[node name="Node2D3" type="Node2D" parent="coners_list"]
-position = Vector2(-100, 50)
-
-[node name="Node2D4" type="Node2D" parent="coners_list"]
+[node name="Node2D6" type="Node2D" parent="border"]
 position = Vector2(-75, 0)
 
-[node name="Node2D5" type="Node2D" parent="coners_list"]
-position = Vector2(-50, 0)
+[node name="Node2D7" type="Node2D" parent="border"]
+position = Vector2(-25, 0)
 
-[node name="Node2D6" type="Node2D" parent="coners_list"]
-position = Vector2(-50, -50)
+[node name="Node2D8" type="Node2D" parent="border"]
+position = Vector2(-25, -50)
 
-[node name="Node2D7" type="Node2D" parent="coners_list"]
-position = Vector2(50, -50)
-
-[node name="Node2D8" type="Node2D" parent="coners_list"]
-position = Vector2(50, 0)
+[connection signal="area_entered" from="piece" to="." method="_on_piece_area_entered"]

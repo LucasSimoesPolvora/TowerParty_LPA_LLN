@@ -1,147 +1,183 @@
 extends Node2D
 
+var sounds = preload("res://library/sound.gd").new()
+
 var smoothing_speed := 1.0
 
 const SPAWNCHECKPOINT0 = 0
 const SPAWNCHECKPOINT1 = -450
 const SPAWNCHECKPOINT2 = -1000
-var pieceSpawnPosY = SPAWNCHECKPOINT0
+var piece_spawn_position_y = SPAWNCHECKPOINT0
 
 var camera
-var timersCheckpoint1 = []
-var timersCheckpoint2 = []
-var timersCheckpointFinal = []
+var checkpoint1_timers = []
+var checkpoint2_timers = []
+var checkpoint3_timers = []
+var nextPieceNumber = generateRandomNumber()
 
 @onready var beam = $Beam
-@onready var fallingPiece = $pieces/isFalling
-
+@onready var isFalling = $pieces/isFalling
 
 func _ready():
+	InitializeCamera()
+	InitializeSound()
+
+func InitializeSound():
+	add_child(sounds)
+
+func InitializeCamera():
 	camera = $Camera2D
 	camera.position.y = Global.cameraPositionY
 
 func _process(delta: float) -> void:
 	inst()
+	handle_user_input_screen_size()
 	changeCamera(delta)
-	beam.updateBeam(fallingPiece,beam)
-	
-	print("Checkpoint 1 :")
-	print(timersCheckpoint1)
-	
-	print("Checkpoint 2:")
-	print(timersCheckpoint2)
-	
-	print("Checkpoint final")
-	print(timersCheckpointFinal)
+	beam.updateBeam(isFalling,beam)
+
+func handle_user_input_screen_size():
+	if Input.is_action_just_pressed("fullscreen"):
+		Global.change_screen_mode()
 
 func changeCamera(delta: float):
 	var target_y = float(Global.cameraPositionY)
 	camera.position.y = lerp(camera.position.y, target_y, smoothing_speed * delta)
 
+func generateRandomNumber():
+	return randi() % Global.pieces.size()  # Sélectionne une pièce aléatoirement
+
 func inst():
 	if Global.spawnBloc:
-		var random_index = randi() % Global.pieces.size()  # Sélectionne une pièce aléatoirement
-		var piece_data = Global.pieces[random_index]  # Récupère les données de la pièce
-		var instance = piece_data["scene"].instantiate()  # Instancie la scène de la pièce
+		var pieces_node = $pieces
+		var is_falling_node = pieces_node.get_node("isFalling")
+		var has_fallen_node = pieces_node.get_node("hasFallen")
+
+		for piece in is_falling_node.get_children():
+			is_falling_node.remove_child(piece)
+			has_fallen_node.add_child(piece)
+		var piece_data = Global.pieces[nextPieceNumber]  # Récupère les données de la pièce
+		nextPieceNumber = generateRandomNumber()
+		var piece_instance = piece_data["scene"].instantiate()  # Instancie la scène de la pièce
 		
-		instance.position = Vector2(540, pieceSpawnPosY)
-		instance.set_meta("isFalling", true)
+		var next_piece_data = Global.pieces[nextPieceNumber]
+		display_next_piece(next_piece_data)
 		
-		fallingPiece.add_child(instance)
+		piece_instance.position = Vector2(540, piece_spawn_position_y)
+		piece_instance.set_meta("isFalling", true)
+		
+		is_falling_node.add_child(piece_instance)
 		Global.spawnBloc = false
 
-func _on_checkpoint_1_area_entered(area: Area2D) -> void:
-	if not area.name == "piece":
-		return
+func display_next_piece(next_piece_data):
+	var next_piece_preview_node = $nextPiecePreview
+	#clean old piece
+	for child in next_piece_preview_node.get_children():
+		next_piece_preview_node.remove_child(child)
+		child.queue_free()
 	
-	pieceSpawnPosY = SPAWNCHECKPOINT1
+	var next_piece_instance = next_piece_data["scene"].instantiate()
+	next_piece_instance.set_meta("isPreview", true)
+	next_piece_instance.set_meta("isFalling", false)
+	next_piece_instance.position = Vector2(0, 0)
 	
-	var new_timer = Timer.new()
-	new_timer.wait_time = 3
-	new_timer.one_shot = true
-	new_timer.set_meta("name", area.get_parent().get_parent().name)
-	new_timer.timeout.connect(Callable(self, "_on_checkpoint_1_timer_timeout").bind(new_timer))
-	timersCheckpoint1.append(new_timer)
-	add_child(new_timer)
-	new_timer.start()
+	next_piece_preview_node.add_child(next_piece_instance)
 
-func _on_checkpoint_1_area_exited(area: Area2D) -> void:
+func appendTimer(timer, checkpointNumber):
+	match checkpointNumber:
+		1:
+			checkpoint1_timers.append(timer)
+		2:
+			checkpoint2_timers.append(timer)
+		3:
+			checkpoint3_timers.append(timer)
+
+func _on_checkpoint_timer_timeout(piece_spawn_position_y):
+	print("piece_spawn_position_y")
+	print(piece_spawn_position_y)
+	print("cameraPositionY")
+	print(Global.cameraPositionY)
+	Global.cameraPositionY = piece_spawn_position_y-150
+	print("cameraPositionY after")
+	print(Global.cameraPositionY)
+	piece_spawn_position_y = piece_spawn_position_y-475
+	print("piece_spawn_position_y")
+	print(piece_spawn_position_y)
+
+func getPieceSpawnPosition(checkpointNumber: int):
+	match checkpointNumber:
+		1:
+			return SPAWNCHECKPOINT0
+		2:
+			return SPAWNCHECKPOINT1
+		3:
+			return SPAWNCHECKPOINT2
+
+func getCheckpointNumber(area: Area2D) -> int:
+	var area_position = area.get_parent().position.y
+	if area_position > SPAWNCHECKPOINT0:
+		return 1
+	elif area_position > SPAWNCHECKPOINT1:
+		return 2
+	else:
+		return 3
+
+func _on_checkpoint_area_entered(area: Area2D) -> void:
 	if not area.name == "piece":
 		return
 	
-	for timer in timersCheckpoint1:
-		if timer.get_meta("name") == area.get_parent().get_parent().name:
-			timer.stop()
-			timersCheckpoint1.erase(timer)
+	var checkpointNumber = getCheckpointNumber(area)
+	var potential_piece_spawn_position_y = getPieceSpawnPosition(checkpointNumber)
+	if potential_piece_spawn_position_y<piece_spawn_position_y:
+		piece_spawn_position_y = potential_piece_spawn_position_y
+	
+	var timer = Timer.new()
+	timer.wait_time = 3
+	timer.one_shot = true
+	timer.set_meta("name", area.get_parent().get_parent().name)
+	timer.timeout.connect(Callable(self, "_on_checkpoint_timer_timeout").bind(timer, piece_spawn_position_y))
+	appendTimer(timer, checkpointNumber)
+	add_child(timer)
+	timer.start()
+
+func _on_checkpoint_area_exited(area: Area2D):
+	if not area.name == "piece":
+		return
+	
+	var checkpointNumber = getCheckpointNumber(area)
+	removeTimer(checkpointNumber, area)
+
+func removeTimer(checkpointNumber, area):
+	match checkpointNumber:
+		1:
+			for timer in checkpoint1_timers:
+				if timer.get_meta("name") == area.get_parent().get_parent().name:
+					timer.stop()
+					checkpoint1_timers.erase(timer)
 			
-			if not timersCheckpoint1.size()>0 && not area.get_parent().get_parent().get_meta("isFalling"):
-				Global.cameraPositionY = get_parent().position.y+60
-			pieceSpawnPosY = SPAWNCHECKPOINT0
-			timer.queue_free()
-
-func _on_checkpoint_2_area_entered(area: Area2D) -> void:
-	if not area.name == "piece":
-		return
-	
-	pieceSpawnPosY = SPAWNCHECKPOINT2
-	
-	var new_timer = Timer.new()
-	new_timer.wait_time = 3
-	new_timer.one_shot = true
-	new_timer.set_meta("name", area.get_parent().get_parent().name)
-	new_timer.timeout.connect(Callable(self, "_on_checkpoint_2_timer_timeout").bind(new_timer))
-	timersCheckpoint2.append(new_timer)
-	add_child(new_timer)
-	new_timer.start()
-
-func _on_checkpoint_2_area_exited(area: Area2D) -> void:
-	if not area.name == "piece":
-		return
-	
-	for timer in timersCheckpoint2:
-		if timer.get_meta("name") == area.get_parent().get_parent().name:
-			timer.stop()
-			timersCheckpoint2.erase(timer)
+					if not checkpoint1_timers.size()>0 && not area.get_parent().get_meta("isFalling"):
+						Global.cameraPositionY = get_parent().position.y+60
+						timer.queue_free()
+		2:
+			for timer in checkpoint2_timers:
+				if timer.get_meta("name") == area.get_parent().get_parent().name:
+					timer.stop()
+					checkpoint2_timers.erase(timer)
 			
-			if not timersCheckpoint2.size()>0 && not area.get_parent().get_parent().get_meta("isFalling"):
-				Global.cameraPositionY = get_parent().position.y+60
-			pieceSpawnPosY = SPAWNCHECKPOINT1
-			timer.queue_free()
+					if not checkpoint2_timers.size()>0 && not area.get_parent().get_meta("isFalling"):
+						Global.cameraPositionY = get_parent().position.y+60
+						timer.queue_free()
+		3:
+			for timer in checkpoint3_timers:
+				if timer.get_meta("name") == area.get_parent().get_parent().name:
+					timer.stop()
+					checkpoint3_timers.erase(timer)
+			
+					if not checkpoint3_timers.size()>0 && not area.get_parent().get_meta("isFalling"):
+						Global.cameraPositionY = get_parent().position.y+60
+						timer.queue_free()
 
-func _on_checkpoint_final_area_entered(area: Area2D) -> void:
-	if not area.name == "piece":
-		return
-	
-	var new_timer = Timer.new()
-	new_timer.wait_time = 3
-	new_timer.one_shot = true
-	new_timer.set_meta("name", area.get_parent().get_parent().name)
-	new_timer.timeout.connect(Callable(self, "_on_checkpoint_final_timer_timeout").bind(new_timer))
-	timersCheckpointFinal.append(new_timer)
-	add_child(new_timer)
-	new_timer.start()
 
-func _on_checkpoint_final_area_exited(area: Area2D) -> void:
-	if not area.name == "piece":
-		return
-	
-	for timer in timersCheckpointFinal:
-		if timer.get_meta("name") == area.get_parent().get_parent().name:
-			timer.stop()
-			timersCheckpointFinal.erase(timer)
-			timer.queue_free()
-
-func _on_checkpoint_1_timer_timeout(_timer: Timer) -> void:
-	Global.cameraPositionY = SPAWNCHECKPOINT0-111
-	pieceSpawnPosY = SPAWNCHECKPOINT1
-
-func _on_checkpoint_final_timer_timeout(_timer: Timer) -> void:
-	queue_free()
-	
-	var label = Label.new()
-	label.text = "You won" #TODO : new scene
-	get_tree().root.add_child(label)
-
-func _on_checkpoint_2_timer_timeout(_timer: Timer) -> void:
-	Global.cameraPositionY = SPAWNCHECKPOINT1-111
-	pieceSpawnPosY = SPAWNCHECKPOINT2
+func _on_reset_button_pressed() -> void:
+	var hasFallen = $pieces/hasFallen
+	for child in hasFallen.get_children():
+		child.queue_free()

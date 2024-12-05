@@ -1,0 +1,147 @@
+[gd_scene load_steps=21 format=3 uid="uid://bhy06cx544rl6"]
+
+[ext_resource type="Script" path="res://scenes/menu/mainMenu.gd" id="1_rjgj7"]
+[ext_resource type="Texture2D" uid="uid://dj1a267qccpxa" path="res://Assets/Images/Others/background.jpg" id="2_364eq"]
+[ext_resource type="FontFile" uid="uid://ciu34ps6m37b6" path="res://Assets/Fonts/upheavtt.ttf" id="3_8ncgk"]
+[ext_resource type="Texture2D" uid="uid://ry5pgmaujf8q" path="res://Assets/Images/Buttons/GUI.png" id="4_4mf5c"]
+[ext_resource type="FontFile" uid="uid://buy3olo1dhofr" path="res://Assets/Fonts/Shape Bit.otf" id="4_m7ah4"]
+
+[sub_resource type="Theme" id="Theme_ftrnu"]
+default_font_size = 25
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v34aq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t2ytc"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 113, 46, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eu4ey"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 98, 46, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ot1gb"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 81, 46, 14)
+
+[sub_resource type="Theme" id="Theme_vk8oc"]
+default_font_size = 25
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhf23"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tcf4m"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 113, 46, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b52as"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 98, 46, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f5e7u"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 81, 46, 14)
+
+[sub_resource type="Theme" id="Theme_4crsb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sqp2a"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_243pl"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 113, 46, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jou6o"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 98, 46, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lfor6"]
+texture = ExtResource("4_4mf5c")
+region_rect = Rect2(145, 81, 46, 14)
+
+[node name="mainControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rjgj7")
+
+[node name="background" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -317.0
+offset_top = -432.0
+offset_right = 451.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_364eq")
+
+[node name="playingButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 469.0
+offset_top = 274.0
+offset_right = 675.0
+offset_bottom = 326.0
+theme = SubResource("Theme_ftrnu")
+theme_override_fonts/font = ExtResource("3_8ncgk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_v34aq")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t2ytc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_eu4ey")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ot1gb")
+text = "Jouer"
+
+[node name="settingsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 473.0
+offset_top = 377.0
+offset_right = 679.0
+offset_bottom = 429.0
+theme = SubResource("Theme_vk8oc")
+theme_override_fonts/font = ExtResource("3_8ncgk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nhf23")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tcf4m")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_b52as")
+theme_override_styles/normal = SubResource("StyleBoxTexture_f5e7u")
+text = "Réglages"
+
+[node name="fullscreenButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.979
+anchor_top = 0.958
+anchor_right = 0.979
+anchor_bottom = 0.958
+offset_left = -145.808
+offset_top = -49.784
+offset_right = 0.192017
+offset_bottom = 0.216003
+grow_horizontal = 0
+grow_vertical = 0
+theme = SubResource("Theme_4crsb")
+theme_override_fonts/font = ExtResource("3_8ncgk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sqp2a")
+theme_override_styles/hover = SubResource("StyleBoxTexture_243pl")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jou6o")
+theme_override_styles/normal = SubResource("StyleBoxTexture_lfor6")
+text = "Plein écran"
+
+[node name="title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -435.5
+offset_right = 435.5
+offset_bottom = 206.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.554625, 0.576318, 0.969144, 1)
+theme_override_colors/font_outline_color = Color(0.886275, 0.329412, 1, 1)
+theme_override_fonts/font = ExtResource("4_m7ah4")
+theme_override_font_sizes/font_size = 100
+text = "Tower Game"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="playingButton" to="." method="_on_playing_button_pressed"]
+[connection signal="pressed" from="fullscreenButton" to="." method="_on_fullscreen_button_pressed"]

@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0qf3xhjip5no"]
+[gd_scene load_steps=5 format=3 uid="uid://d0qf3xhjip5no"]
 
 [ext_resource type="PackedScene" uid="uid://cba1l7q1loadk" path="res://scenes/game_elements/pieces/basics/O/block_piece_O.tscn" id="1_33jux"]
+[ext_resource type="Script" path="res://scenes/game_elements/pieces/pieces.gd" id="1_yuj2s"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c8l5w"]
-size = Vector2(100, 100)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7y07"]
+size = Vector2(99.75, 99.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ak1x1"]
+size = Vector2(99.75, 99.75)
 
 [node name="RigidBody2D" type="RigidBody2D"]
+script = ExtResource("1_yuj2s")
 
 [node name="block_piece_O" parent="." instance=ExtResource("1_33jux")]
 
@@ -18,24 +23,26 @@ position = Vector2(0, -50)
 [node name="block_piece_O4" parent="." instance=ExtResource("1_33jux")]
 position = Vector2(-50, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_c8l5w")
-
 [node name="piece" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="piece"]
-shape = SubResource("RectangleShape2D_c8l5w")
+shape = SubResource("RectangleShape2D_s7y07")
 
-[node name="coners_list" type="Node2D" parent="."]
+[node name="border" type="Node2D" parent="."]
 
-[node name="Node2D" type="Node2D" parent="coners_list"]
-position = Vector2(-50, -50)
-
-[node name="Node2D2" type="Node2D" parent="coners_list"]
+[node name="Node2D" type="Node2D" parent="border"]
 position = Vector2(50, -50)
 
-[node name="Node2D3" type="Node2D" parent="coners_list"]
+[node name="Node2D2" type="Node2D" parent="border"]
 position = Vector2(50, 50)
 
-[node name="Node2D4" type="Node2D" parent="coners_list"]
+[node name="Node2D3" type="Node2D" parent="border"]
 position = Vector2(-50, 50)
+
+[node name="Node2D4" type="Node2D" parent="border"]
+position = Vector2(-50, -50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ak1x1")
+
+[connection signal="area_entered" from="piece" to="." method="_on_piece_area_entered"]

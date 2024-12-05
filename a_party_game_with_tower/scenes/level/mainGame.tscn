@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cejt44jlc47d"]
+[gd_scene load_steps=14 format=3 uid="uid://cejt44jlc47d"]
 
 [ext_resource type="PackedScene" uid="uid://k5no8rbevxm5" path="res://scenes/game_elements/platforms/4.tscn" id="1_e2v8h"]
 [ext_resource type="Script" path="res://scenes/level/main_game.gd" id="1_pba15"]
 [ext_resource type="Texture2D" uid="uid://bxk4vf7scuu42" path="res://Assets/Images/Others/finishLine.png" id="3_i1v6j"]
-[ext_resource type="PackedScene" uid="uid://d3q3o25dcrisy" path="res://scenes/game_elements/beam/beam.tscn" id="4_mxqlo"]
+[ext_resource type="PackedScene" uid="uid://d3q3o25dcrisy" path="res://scenes/game_elements/beam/beam.tscn" id="4_koegk"]
+[ext_resource type="FontFile" uid="uid://ciu34ps6m37b6" path="res://Assets/Fonts/upheavtt.ttf" id="5_3odew"]
+[ext_resource type="Texture2D" uid="uid://ry5pgmaujf8q" path="res://Assets/Images/Buttons/GUI.png" id="6_jd1al"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu1am"]
 size = Vector2(284.878, 33.4471)
@@ -11,8 +13,24 @@ size = Vector2(284.878, 33.4471)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4lmhx"]
 size = Vector2(4558, 200)
 
+[sub_resource type="Theme" id="Theme_yeqvi"]
+default_font_size = 25
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ywlty"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2u7ot"]
+texture = ExtResource("6_jd1al")
+region_rect = Rect2(145, 113, 46, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s0mtx"]
+texture = ExtResource("6_jd1al")
+region_rect = Rect2(145, 98, 46, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w5h6t"]
+texture = ExtResource("6_jd1al")
+region_rect = Rect2(145, 81, 46, 14)
+
 [node name="MainGame" type="Node2D"]
-position = Vector2(36, -111)
 script = ExtResource("1_pba15")
 
 [node name="4" parent="." instance=ExtResource("1_e2v8h")]
@@ -64,27 +82,39 @@ position = Vector2(-1800, 984)
 position = Vector2(2269, 90)
 shape = SubResource("RectangleShape2D_4lmhx")
 
-[node name="checkpoint1Timer" type="Timer" parent="."]
-
-[node name="checkpointFinalTimer" type="Timer" parent="."]
-
-[node name="checkpoint2Timer" type="Timer" parent="."]
-
-[node name="Beam" parent="." instance=ExtResource("4_mxqlo")]
-position = Vector2(896, 498)
-
 [node name="pieces" type="Node2D" parent="."]
 
 [node name="isFalling" type="Node2D" parent="pieces"]
 
 [node name="hasFallen" type="Node2D" parent="pieces"]
 
-[connection signal="area_entered" from="checkPoint1/checkpoint1" to="." method="_on_checkpoint_1_area_entered"]
-[connection signal="area_exited" from="checkPoint1/checkpoint1" to="." method="_on_checkpoint_1_area_exited"]
-[connection signal="area_entered" from="checkPoint2/checkpoint2" to="." method="_on_checkpoint_2_area_entered"]
-[connection signal="area_exited" from="checkPoint2/checkpoint2" to="." method="_on_checkpoint_2_area_exited"]
-[connection signal="area_entered" from="checkPoint3/checkpointFinal" to="." method="_on_checkpoint_final_area_entered"]
-[connection signal="area_exited" from="checkPoint3/checkpointFinal" to="." method="_on_checkpoint_final_area_exited"]
-[connection signal="timeout" from="checkpoint1Timer" to="." method="_on_checkpoint_1_timer_timeout"]
-[connection signal="timeout" from="checkpointFinalTimer" to="." method="_on_checkpoint_final_timer_timeout"]
-[connection signal="timeout" from="checkpoint2Timer" to="." method="_on_checkpoint_2_timer_timeout"]
+[node name="Beam" parent="." instance=ExtResource("4_koegk")]
+
+[node name="nextPiecePreview" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -0.00012207
+offset_right = 39.9999
+offset_bottom = 40.0
+
+[node name="resetButton" type="Button" parent="."]
+offset_left = 1011.0
+offset_top = 651.0
+offset_right = 1217.0
+offset_bottom = 703.0
+focus_mode = 0
+theme = SubResource("Theme_yeqvi")
+theme_override_fonts/font = ExtResource("5_3odew")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ywlty")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2u7ot")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_s0mtx")
+theme_override_styles/normal = SubResource("StyleBoxTexture_w5h6t")
+text = "Recommencer"
+
+[connection signal="area_entered" from="checkPoint1/checkpoint1" to="." method="_on_checkpoint_area_entered"]
+[connection signal="area_exited" from="checkPoint1/checkpoint1" to="." method="_on_checkpoint_area_exited"]
+[connection signal="area_entered" from="checkPoint2/checkpoint2" to="." method="_on_checkpoint_area_entered"]
+[connection signal="area_exited" from="checkPoint2/checkpoint2" to="." method="_on_checkpoint_area_exited"]
+[connection signal="area_entered" from="checkPoint3/checkpointFinal" to="." method="_on_checkpoint_area_entered"]
+[connection signal="area_exited" from="checkPoint3/checkpointFinal" to="." method="_on_checkpoint_area_exited"]
+[connection signal="pressed" from="resetButton" to="." method="_on_reset_button_pressed"]

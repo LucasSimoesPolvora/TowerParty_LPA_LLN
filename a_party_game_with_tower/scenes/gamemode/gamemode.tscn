@@ -1,0 +1,162 @@
+[gd_scene load_steps=22 format=3 uid="uid://lqjt8qr6eac3"]
+
+[ext_resource type="Texture2D" uid="uid://dj1a267qccpxa" path="res://Assets/Images/Others/background.jpg" id="1_88h35"]
+[ext_resource type="Script" path="res://scenes/gamemode/gamemode.gd" id="1_oouuq"]
+[ext_resource type="FontFile" uid="uid://buy3olo1dhofr" path="res://Assets/Fonts/Shape Bit.otf" id="2_2qqf7"]
+[ext_resource type="FontFile" uid="uid://ciu34ps6m37b6" path="res://Assets/Fonts/upheavtt.ttf" id="3_77b45"]
+[ext_resource type="Texture2D" uid="uid://ry5pgmaujf8q" path="res://Assets/Images/Buttons/GUI.png" id="4_xp6x6"]
+[ext_resource type="Texture2D" uid="uid://crihsbwd0goyq" path="res://Assets/Images/Others/left-arrow.png" id="6_kvns3"]
+
+[sub_resource type="Theme" id="Theme_vircb"]
+default_font_size = 25
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_485qd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_phygo"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(145, 113, 46, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_72dka"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(145, 98, 46, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pvccc"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(145, 81, 46, 14)
+
+[sub_resource type="Theme" id="Theme_vtbx1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yprqd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2xl5u"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(81, 97, 30, 30)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qj6vq"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(81, 97, 30, 30)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u7vwj"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(81, 97, 30, 30)
+
+[sub_resource type="Theme" id="Theme_txf8e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8g6db"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u2xsa"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(145, 113, 46, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q0pyv"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(145, 98, 46, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dgl6m"]
+texture = ExtResource("4_xp6x6")
+region_rect = Rect2(145, 81, 46, 14)
+
+[node name="Gamemode" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oouuq")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -317.0
+offset_top = -432.0
+offset_right = 451.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_88h35")
+
+[node name="title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -435.5
+offset_right = 435.5
+offset_bottom = 206.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.554625, 0.576318, 0.969144, 1)
+theme_override_colors/font_outline_color = Color(0.886275, 0.329412, 1, 1)
+theme_override_fonts/font = ExtResource("2_2qqf7")
+theme_override_font_sizes/font_size = 100
+text = "Gamemode"
+horizontal_alignment = 1
+
+[node name="challengeButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 425.0
+offset_top = 318.0
+offset_right = 631.0
+offset_bottom = 370.0
+theme = SubResource("Theme_vircb")
+theme_override_fonts/font = ExtResource("3_77b45")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_485qd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_phygo")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_72dka")
+theme_override_styles/normal = SubResource("StyleBoxTexture_pvccc")
+text = "Challenge"
+
+[node name="localButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 422.0
+offset_top = 218.0
+offset_right = 628.0
+offset_bottom = 270.0
+theme = SubResource("Theme_vircb")
+theme_override_fonts/font = ExtResource("3_77b45")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_485qd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_phygo")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_72dka")
+theme_override_styles/normal = SubResource("StyleBoxTexture_pvccc")
+text = "Local"
+
+[node name="backButton" type="Button" parent="."]
+layout_mode = 1
+offset_right = 70.0
+offset_bottom = 70.0
+theme = SubResource("Theme_vtbx1")
+theme_override_icons/icon = ExtResource("6_kvns3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yprqd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2xl5u")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qj6vq")
+theme_override_styles/normal = SubResource("StyleBoxTexture_u7vwj")
+expand_icon = true
+
+[node name="fullscreenButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.979
+anchor_top = 0.958
+anchor_right = 0.979
+anchor_bottom = 0.958
+offset_left = -145.808
+offset_top = -49.784
+offset_right = 0.192017
+offset_bottom = 0.216003
+grow_horizontal = 0
+grow_vertical = 0
+theme = SubResource("Theme_txf8e")
+theme_override_fonts/font = ExtResource("3_77b45")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8g6db")
+theme_override_styles/hover = SubResource("StyleBoxTexture_u2xsa")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_q0pyv")
+theme_override_styles/normal = SubResource("StyleBoxTexture_dgl6m")
+text = "Plein écran"
+
+[connection signal="pressed" from="challengeButton" to="." method="_on_local_button_pressed"]
+[connection signal="pressed" from="localButton" to="." method="_on_local_button_pressed"]
+[connection signal="pressed" from="backButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="fullscreenButton" to="." method="_on_fullscreen_button_pressed"]
