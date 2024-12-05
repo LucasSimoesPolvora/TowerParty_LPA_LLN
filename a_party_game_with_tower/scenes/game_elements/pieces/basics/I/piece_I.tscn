@@ -10,7 +10,6 @@ size = Vector2(49.75, 199.75)
 size = Vector2(49.75, 199.75)
 
 [node name="RigidBody2D" type="RigidBody2D"]
-mass = 0.002
 script = ExtResource("1_432fg")
 
 [node name="block_piece_I" parent="." instance=ExtResource("1_ocpf4")]
