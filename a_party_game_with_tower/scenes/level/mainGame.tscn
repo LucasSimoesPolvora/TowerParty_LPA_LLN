@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cejt44jlc47d"]
+[gd_scene load_steps=15 format=3 uid="uid://cejt44jlc47d"]
 
 [ext_resource type="Script" path="res://scenes/level/main_game.gd" id="1_pba15"]
 [ext_resource type="Texture2D" uid="uid://bxk4vf7scuu42" path="res://Assets/Images/Others/finishLine.png" id="3_i1v6j"]
@@ -6,6 +6,8 @@
 [ext_resource type="FontFile" uid="uid://ciu34ps6m37b6" path="res://Assets/Fonts/upheavtt.ttf" id="5_3odew"]
 [ext_resource type="Texture2D" uid="uid://ry5pgmaujf8q" path="res://Assets/Images/Buttons/GUI.png" id="6_jd1al"]
 [ext_resource type="PackedScene" uid="uid://1lcuvle8dvg6" path="res://scenes/game_elements/platforms/normalPlatform.tscn" id="7_g0xp2"]
+[ext_resource type="Script" path="res://scenes/level/stopwatch_label.gd" id="7_pia3e"]
+>>>>>>> Stashed changes
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu1am"]
 size = Vector2(284.878, 33.4471)
@@ -99,5 +101,17 @@ text = "Prochaine pièce :"
 [node name="NormalPlatform" parent="." instance=ExtResource("7_g0xp2")]
 position = Vector2(157, 890)
 scale = Vector2(3.125, 3.125)
+[node name="StopwatchLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -35.0
+offset_top = 45.0
+offset_right = 38.0
+offset_bottom = 68.0
+grow_horizontal = 2
+text = "00:00:000"
+script = ExtResource("7_pia3e")
+>>>>>>> Stashed changes
 
 [connection signal="pressed" from="CanvasLayer/resetButton" to="." method="_on_reset_button_pressed"]
