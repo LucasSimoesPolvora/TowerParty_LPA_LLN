@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://crfhvuy3sfthw"]
+
+[ext_resource type="Script" path="res://scenes/game_elements/guide-button/guide_button.gd" id="1_khvvl"]
+
+[node name="guideButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Afficher le guide"
+script = ExtResource("1_khvvl")
+
+[node name="Popup" type="Popup" parent="."]
+
+[node name="Label" type="Label" parent="Popup"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Contrôles du jeu Clavier :
+Déplacement gauche : A ou Flèche gauche (Shift pour un déplacement plus grand).
+Déplacement droite : D ou Flèche droite (Shift pour un déplacement plus grand).
+Descente rapide : S ou Flèche bas.
+Rotation horaire : Espace ou E.
+Rotation antihoraire : Q.
+Basculer en plein écran : Échap.
+
+Contrôles du jeu Manette :
+Déplacement gauche : Flèche gauche ou joystick  gauche vers la gauche (L1 pour un déplacement plus grand).
+Déplacement droite : Flèche droite ou joystick gauche vers la droite (R1 pour un déplacement plus grand).
+Descente rapide : Flèche bas ou joystick bas.
+Rotation horaire : R2.
+Rotation antihoraire : L2."
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
