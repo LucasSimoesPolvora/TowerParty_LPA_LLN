@@ -23,6 +23,10 @@ Global="*res://global.gd"
 
 window/size/resizable=false
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+
 [input]
 
 right={
