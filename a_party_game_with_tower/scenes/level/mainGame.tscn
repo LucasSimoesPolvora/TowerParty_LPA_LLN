@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cejt44jlc47d"]
+[gd_scene load_steps=16 format=3 uid="uid://cejt44jlc47d"]
 
 [ext_resource type="Script" path="res://scenes/level/main_game.gd" id="1_pba15"]
 [ext_resource type="Texture2D" uid="uid://bxk4vf7scuu42" path="res://Assets/Images/Others/finishLine.png" id="3_i1v6j"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ry5pgmaujf8q" path="res://Assets/Images/Buttons/GUI.png" id="6_jd1al"]
 [ext_resource type="PackedScene" path="res://scenes/game_elements/platforms/normalPlatform.tscn" id="7_g0xp2"]
 [ext_resource type="Script" path="res://scenes/level/stopwatch_label.gd" id="7_pia3e"]
+[ext_resource type="PackedScene" uid="uid://d22hekuejt7ve" path="res://Assets/Background/Background.tscn" id="8_fp466"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu1am"]
 size = Vector2(284.878, 33.4471)
@@ -39,6 +40,12 @@ position = Vector2(541, 660)
 rotation = 3.14159
 scale = Vector2(97.6653, 61.0896)
 zoom = Vector2(0.7, 0.7)
+
+[node name="Background" parent="Camera2D" instance=ExtResource("8_fp466")]
+show_behind_parent = true
+position = Vector2(11.3448, 13.0465)
+rotation = -3.14159
+scale = Vector2(0.0409562, 0.0654776)
 
 [node name="End" type="Sprite2D" parent="."]
 position = Vector2(543.5, -700)
