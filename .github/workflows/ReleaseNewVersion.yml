@@ -6,17 +6,26 @@ on:
       - main
 
 jobs:
-  Build_and_test_the_exe:
+  export_game:
     runs-on: ubuntu-latest
-
+    name: Export Game Job
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: checkout
+        uses: actions/checkout@v4
 
-    - name: Set up Godot
-      uses: josephbmanley/godot-export@v1
-      with:
-        godot-version: '4.0.3'
-
-    - name: Build for Windows
-      run: godot --path ./a_party_game_with_tower --export "Windows Desktop" ./a_party_game_with_tower/TowerParty_win.exe
+      - name: install wine
+        id: wine_install
+        run: |
+          sudo apt install wine64
+          echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
+          
+      - name: export game
+        id: export
+        uses: firebelley/godot-export@v6.0.0
+        with:                            
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
+          relative_project_path: ./testworkflow # Put the relative path to the project
+          relative_export_path: ./
+          archive_output: true
+          wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
